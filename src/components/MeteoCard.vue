@@ -1,13 +1,15 @@
 <template>
-    <q-card class="my-card">
+  <q-card class="my-card">
     <img
-      :src="codesReference[code].day.image"
+      :src="codesReference[daily.weatherCode].day.image"
       height="100"
       style="width: 100px"
     />
     <q-card-section>
-      <div class="text-h6">{{ codesReference[code].day.description }}</div>
-      <div class="text-subtitle2">by me</div>
+      <div class="text-h6">
+        {{ codesReference[daily.weatherCode].day.description }}
+      </div>
+      <div class="text-subtitle2">{{ daily.temperatureMax }}</div>
     </q-card-section>
     <q-card-section class="q-pt-none">
       {{ lorem }}
@@ -18,7 +20,6 @@
 <script setup>
 defineProps({
   codesReference: Object,
-  code: Number,
-})
-
+  daily: Object,
+});
 </script>
