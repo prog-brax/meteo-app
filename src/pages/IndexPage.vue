@@ -2,26 +2,20 @@
   <q-input standout v-model="latitude" label="Latitude" />
   <q-input standout v-model="longitude" label="Longitude" />
   <q-btn color="amber" glossy label="Afficher" @click="searchMeteo" />
-  <q-card class="my-card" v-for="(Code, index) in Codes" :key="index">
-    <img
-      :src="codesReference[Code].day.image"
-      height="100"
-      style="width: 100px"
-    />
-    <q-card-section>
-      <div class="text-h6">{{ codesReference[Code].day.description }}</div>
-      <div class="text-subtitle2">by me</div>
-    </q-card-section>
-    <q-card-section class="q-pt-none">
-      {{ lorem }}
-    </q-card-section>
-  </q-card>
+  <meteo-card
+    v-for="(code, index) in Codes"
+    :key="index"
+    :codesReference="codesReference"
+    :code="code"
+  />
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import codes from "src/data/wmo-codes-fr.json";
+
+import MeteoCard from 'src/components/MeteoCard.vue'
 
 defineOptions({
   name: "IndexPage",
