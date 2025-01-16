@@ -8,7 +8,7 @@
         <q-item-section>
           <q-item-label>
             <div class="text-h6">
-              {{ daily.time }}
+              {{ formattedDate }}
             </div>
           </q-item-label>
           <q-item-label caption>
@@ -26,8 +26,18 @@
 </template>
 
 <script setup>
-defineProps({
+import { computed } from "vue";
+
+import { format, parse } from "date-fns";
+import { fr } from "date-fns/locale";
+
+const props = defineProps({
   codesReference: Object,
   daily: Object,
+});
+
+const formattedDate = computed(() => {
+  const date = parse(props.daily.time, "yyyy-MM-dd", new Date());
+  return format(date, "eeee dd MMMM", { locale: fr });
 });
 </script>
