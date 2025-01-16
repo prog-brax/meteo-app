@@ -1,7 +1,15 @@
 <template>
-  <q-input standout v-model="latitude" label="Latitude" />
-  <q-input standout v-model="longitude" label="Longitude" />
-  <q-btn color="amber" glossy label="Afficher" @click="searchMeteo" />
+  <q-input outlined bottom-slots v-model="cityToSearch" label="Quelle ville voulez-vous rentrer?" 
+  @keydown.enter.prevent="searchCity"
+  >
+    <template v-slot:prepend>
+      <q-icon name="place" />
+    </template>
+    <template v-slot:append>
+      <q-icon name="close" @click="cityToSearch = ''" class="cursor-pointer"/>
+    </template>
+  </q-input>
+  <q-btn color= "amber" @click="searchCity"> Chercher</q-btn>
   <meteo-card
     v-for="(dailyMeteo, index) in daily"
     :key="index"
@@ -28,10 +36,18 @@ const daily = ref([]);
 const codesReference = ref(codes);
 const latitude = ref("40");
 const longitude = ref("2");
+const cityToSearch = ref('')
 
 onMounted(async () => {
   searchMeteo();
 });
+
+async function searchCity() {
+  const villes = await axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${cityToSearch.value}&appid=e0c7fc36e50292f9b00704bd4eede937`)
+  longitude.value = villes.data[0].lon
+  latitude.value = villes.data[0].lat
+  searchMeteo()
+}
 
 async function searchMeteo() {
   const meteo = await axios.get(
