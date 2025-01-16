@@ -15,10 +15,21 @@
             <div class="text-h6">
               {{ codesReference[daily.weatherCode].day.description }}
             </div>
-            <div class="text-h6">
-              {{ daily.temperatureMax }}°-{{ daily.temparatureMin }}°
-            </div>
           </q-item-label>
+            <q-list>
+      <q-item>
+        <q-item-section side>
+          <q-item-label style="margin-top:35px;background-color:lightgrey">{{daily.temparatureMin}}</q-item-label>
+        </q-item-section>
+            <q-item-section avatar>
+        <q-img src="/images/meteo-min-max.png" />
+      </q-item-section>
+      
+      <q-item-section>
+          <q-item-label>{{daily.temperatureMax}}</q-item-label>
+        </q-item-section>
+</q-item></q-list>
+          
         </q-item-section>
       </q-item>
     </q-list>
